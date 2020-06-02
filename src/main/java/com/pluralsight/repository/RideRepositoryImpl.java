@@ -11,7 +11,7 @@ import com.pluralsight.model.Ride;
 
 @Repository("rideRepository")
 public class RideRepositoryImpl implements RideRepository {
-	
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -20,9 +20,16 @@ public class RideRepositoryImpl implements RideRepository {
 		Ride ride = new Ride();
 		ride.setName("Corner Canyon");
 		ride.setDuration(120);
-		List <Ride> rides = new ArrayList<>();
+		List<Ride> rides = new ArrayList<>();
 		rides.add(ride);
 		return rides;
 	}
-	
+
+	@Override
+	public Ride createRide(Ride ride) {
+		jdbcTemplate.update("INSERT INTO ride (name, duration) VALUES (?,?)", ride.getName(), ride.getDuration());
+
+		return null;
+	}
+
 }

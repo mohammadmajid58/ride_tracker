@@ -1,5 +1,7 @@
 package com.pluralsight.controller;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -8,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.pluralsight.model.Ride;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 
@@ -18,10 +22,12 @@ public class RestControllerTest {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		Ride ride = new Ride();
-		ride.setName("Willow Trail Ride");
-		ride.setDuration(30);
+		ride.setName("Some Test Ride1");
+		ride.setDuration(38);
 		
-		restTemplate.put("http://localhost:8080/ride_tracker/ride", ride);
+		ride = restTemplate.postForObject("http://localhost:8080/ride_tracker/ride", ride, Ride.class);
+		
+		assertEquals("Some Test Ride1", ride.getName());
 	}
 
 	@Test(timeout=3000)
